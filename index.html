@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NexiaMind AI – About Our AI</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+    
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(64, 224, 208, 0.5);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    
+    /* Header */
+    header {
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(64, 224, 208, 0.3);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger {
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    
+    .hamburger:hover {
+      transform: scale(1.1);
+    }
+    
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: linear-gradient(45deg, #40e0d0, #1a88e0);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    header h1 {
+      flex: 1;
+      text-align: center;
+      font-size: 1.8em;
+      background: linear-gradient(45deg, #40e0d0, #1a88e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(64, 224, 208, 0.5);
+    }
+    
+    /* Sidebar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 50, 0.95) 100%);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(64, 224, 208, 0.3);
+      overflow-y: auto;
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding-top: 70px;
+      z-index: 999;
+    }
+    
+    nav a {
+      display: block;
+      padding: 20px 25px;
+      border-bottom: 1px solid rgba(51, 51, 51, 0.5);
+      color: #e0e0e0;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(64, 224, 208, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    nav a:hover::before {
+      left: 100%;
+    }
+    
+    nav a:hover {
+      background: rgba(64, 224, 208, 0.1);
+      color: #40e0d0;
+      transform: translateX(10px);
+    }
+    
+    /* Main Content */
+    .content {
+      margin-top: 70px;
+      padding: 20px;
+      transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      z-index: 2;
+    }
+    
+    .shifted {
+      margin-left: 280px;
+    }
+    
+    /* Sections */
+    section {
+      max-width: 900px;
+      margin: 30px auto;
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(64, 224, 208, 0.2);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #40e0d0, #1a88e0, #40e0d0);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(64, 224, 208, 0.2);
+    }
+    
+    section h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      background: linear-gradient(45deg, #40e0d0, #1a88e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, #40e0d0, #1a88e0);
+      border-radius: 2px;
+    }
+    
+    section p {
+      margin-bottom: 18px;
+      line-height: 1.7;
+      color: #c0c0c0;
+      font-size: 1.05em;
+    }
+    
+    section strong {
+      color: #40e0d0;
+      font-weight: 600;
+    }
+    
+    /* Enhanced list styling */
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    ul li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 12px;
+      color: #c0c0c0;
+      line-height: 1.6;
+    }
+    
+    ul li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: #40e0d0;
+      font-size: 0.8em;
+      top: 2px;
+    }
+    
+    /* Link styling */
+    .contact-link {
+      color: #40e0d0 !important;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .contact-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #40e0d0, #1a88e0);
+      transition: width 0.3s ease;
+    }
+    
+    .contact-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav { 
+        width: 250px; 
+        left: -250px; 
+      }
+      .shifted { 
+        margin-left: 250px; 
+      }
+      section {
+        margin: 20px auto;
+        padding: 20px;
+      }
+      section h2 {
+        font-size: 1.6em;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      nav { 
+        width: 200px; 
+        left: -200px; 
+      }
+      .shifted { 
+        margin-left: 200px; 
+      }
+      header h1 {
+        font-size: 1.5em;
+      }
+    }
+    
+    /* Scroll animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-in {
+      animation: slideInUp 0.8s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Sidebar Navigation -->
+  <nav id="sidebar">
+    <a href="#home">🏠 Home</a>
+    <a href="#about">🤖 About the AI</a>
+    <a href="#features">⚡ Features</a>
+    <a href="#contact">📧 Contact</a>
+  </nav>
+
+  <!-- Header with Hamburger Menu -->
+  <header>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <h1>NexiaMind AI</h1>
+  </header>
+
+  <!-- Main Content -->
+  <div class="content" id="content">
+    <section id="home" class="animate-in">
+      <h2>Welcome to NexiaMind AI</h2>
+      <p>
+        NexiaMind AI is a high-performance, self-learning system designed using modern C++ design principles.
+        It integrates advanced machine learning libraries and modular architectures to provide real-time inference
+        and training. This system is built for scalability, security, and ease of integration into broader systems.
+      </p>
+      <p>
+        Experience the future of artificial intelligence with our cutting-edge technology that adapts, learns, and evolves
+        with every interaction. NexiaMind AI represents the next generation of intelligent systems designed for the modern world.
+      </p>
+    </section>
+    
+    <section id="about" class="animate-in">
+      <h2>About the AI</h2>
+      <p>
+        <strong>Modular & Extensible Architecture:</strong>  
+        The AI is built with an object-oriented design that leverages design patterns like Observer, Strategy, and Factory,
+        ensuring clean separation of concerns and easy extensibility. This architecture allows for seamless integration
+        of new features and capabilities without disrupting existing functionality.
+      </p>
+      <p>
+        <strong>Performance & Scalability:</strong>  
+        Optimized for real-time inference and training, the system uses efficient memory management (RAII, smart pointers) and
+        multi-threading to handle large datasets and complex computations. Built to scale from single-device deployment
+        to enterprise-level distributed systems.
+      </p>
+      <p>
+        <strong>Self-Learning & Persistence:</strong>  
+        NexiaMind AI continuously learns from user interactions. Unknown queries prompt users to teach the AI, and new data
+        is securely stored in an encrypted knowledge base. It also supports JSON training data, ensuring the model evolves
+        over time while maintaining data integrity and security.
+      </p>
+      <p>
+        <strong>Seamless Integration:</strong>  
+        Designed for cross-platform deployment, the AI easily integrates with popular AI/ML libraries and can be used in
+        various environments including Linux and Windows. Compatible with existing workflows and development ecosystems.
+      </p>
+    </section>
+    
+    <section id="features" class="animate-in">
+      <h2>Key Features</h2>
+      <ul>
+        <li>Modular design with proven design patterns for maximum extensibility and maintainability</li>
+        <li>Real-time inference and training capabilities with advanced multi-threading support</li>
+        <li>Self-learning architecture with encrypted, persistent knowledge storage</li>
+        <li>Modern, responsive user interface with intuitive navigation and accessibility features</li>
+        <li>Seamless integration with industry-standard C++ AI/ML libraries and frameworks</li>
+        <li>Cross-platform compatibility ensuring deployment flexibility</li>
+        <li>Enterprise-grade security with advanced encryption and data protection</li>
+        <li>Comprehensive API support for easy integration into existing systems</li>
+      </ul>
+    </section>
+    
+    <section id="contact" class="animate-in">
+      <h2>Get in Touch</h2>
+      <p>
+        Ready to explore the possibilities with NexiaMind AI? We'd love to hear from you and discuss how our
+        advanced AI system can transform your projects and workflows.
+      </p>
+      <p>
+        For more information, documentation, and source code, please visit our GitHub repository at 
+        <a href="https://github.com/NexiaMindAI/NexiaMindAI-CPP" target="_blank" class="contact-link">https://github.com/NexiaMindAI/NexiaMindAI-CPP</a>
+      </p>
+      <p>
+        Join our community of developers and researchers pushing the boundaries of artificial intelligence.
+        Contributions, feedback, and collaborations are always welcome!
+      </p>
+    </section>
+  </div>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      const particles = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particles.appendChild(particle);
+      }
+    }
+    
+    // Toggle sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      if (sidebar.style.left === "0px") {
+        sidebar.style.left = "-280px";
+        content.classList.remove('shifted');
+      } else {
+        sidebar.style.left = "0px";
+        content.classList.add('shifted');
+      }
+    });
+    
+    // Close sidebar when clicking on main content
+    content.addEventListener('click', () => {
+      if (content.classList.contains('shifted')) {
+        hamburger.classList.remove('active');
+        sidebar.style.left = "-280px";
+        content.classList.remove('shifted');
+      }
+    });
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Initialize particles
+    createParticles();
+    
+    // Add scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
