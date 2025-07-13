@@ -475,7 +475,7 @@ private slots:
         m_isTrainingRequest = false;
         statusBar()->showMessage("Loading data from website...");
         conversationDisplay->append(formatInfoMessage("Loading data from website..."));
-        QUrl url("https://raw.githubusercontent.com/NexiaMindAI/NexiaMindAI-CPP/refs/heads/main/knowledge_base.dat");
+        QUrl url("https://raw.githubusercontent.com/NexiaMindAI/NexiaMindAI-CPP/refs/heads/main/Assets/knowledge_base.dat");
         QNetworkRequest request(url);
         m_networkManager->get(request);
     }
